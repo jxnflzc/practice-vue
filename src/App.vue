@@ -29,4 +29,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.el-table td, .el-table th {
+  text-align: center;
+}
+.el-pagination {
+  margin-top: 10px;
+  text-align: center;
+}
 </style>
