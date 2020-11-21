@@ -2,6 +2,20 @@
   <el-main>
     <el-button type="primary" round icon="el-icon-circle-plus-outline"
                style="float: right" @click="dialogFormVisible = true; operate = '新建'">新建</el-button>
+    <el-input style="width: 300px; float: right; margin-right: 20px"
+              placeholder="请输入Id或名称" v-model="queryLabelModel.keywords"
+              class="input-with-select" @keyup.enter.native="searchLabelList">
+      <el-button slot="append" v-on:click="searchLabelList" icon="el-icon-search"></el-button>
+    </el-input>
+    <el-select style="width: 200px; float: right; margin-right: 20px" v-on:change="searchLabelList"
+               v-model="queryLabelModel.labelType" placeholder="请选择标签分类">
+      <el-option
+        v-for="item in queryTypeList"
+        :key="item.code"
+        :label="item.desc"
+        :value="item.code">
+      </el-option>
+    </el-select>
     <el-table
       stripe
       :data="tableData"
@@ -19,6 +33,13 @@
         prop="labelType.desc"
         label="标签类型"
         width="180">
+      </el-table-column>
+      <el-table-column
+        label="标签热度"
+        width="180">
+        <template slot-scope="scope" >
+          <el-rate v-model="scope.row.labelHot" :allow-half="true" disabled text-color="#ff9900"></el-rate>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createdBy"
@@ -76,6 +97,9 @@
         <el-form-item label="标签值" :label-width="formLabelWidth">
           <el-input v-model="labelModel.labelValue" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="标签热度" :label-width="formLabelWidth">
+          <el-rate v-model="labelModel.labelHot" style="line-height: 3rem;" :allow-half="true"></el-rate>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" v-on:click="saveLabel(labelModel)">保存</el-button>
@@ -92,9 +116,12 @@ export default {
   name: 'LabelList',
   data () {
     return {
+      rate: '3.3',
       queryLabelModel: {
         page: 0,
-        size: 10
+        size: 10,
+        keywords: '',
+        labelType: ''
       },
       paginationModel: {
         sizes: [5, 10, 20, 50],
@@ -108,22 +135,22 @@ export default {
         labelId: '',
         labelName: '',
         labelType: 'S',
-        labelValue: ''
-      },
-      emptyLabelModel: {
-        labelId: '',
-        labelName: '',
-        labelType: 'S',
-        labelValue: ''
+        labelTypeValue: 'S',
+        labelValue: '',
+        labelHot: 0
       },
       labelTypeList: [],
+      queryTypeList: [{
+        code: '',
+        desc: '全部'
+      }],
       formLabelWidth: '120px',
       operate: '新建'
     }
   },
   methods: {
     queryLabelList () {
-      queryLabelList(this.$data.queryLabelModel)
+      queryLabelList(this.queryLabelModel)
         .then(response => {
           let code = response.data.code
           if (code === '200') {
@@ -133,6 +160,10 @@ export default {
             Message.error('查询失败')
           }
         })
+    },
+    searchLabelList () {
+      this.queryLabelModel.page = 0
+      this.queryLabelList()
     },
     handleCurrentChange (current) {
       this.paginationModel.current = current
@@ -150,6 +181,7 @@ export default {
           let code = response.data.code
           if (code === '200') {
             this.labelTypeList = response.data.data
+            this.queryTypeList = this.queryTypeList.concat(response.data.data)
             console.log(this.labelTypeList)
           }
         })
@@ -177,6 +209,7 @@ export default {
           if (code === '200') {
             this.dialogFormVisible = true
             this.labelModel = response.data.data
+            this.labelModel.labelTypeValue = response.data.data.labelType.code
           } else {
             Message.error(response.data.message)
           }
@@ -204,6 +237,7 @@ export default {
         labelId: '',
         labelName: '',
         labelType: 'S',
+        labelTypeValue: 'S',
         labelValue: ''
       }
     },
@@ -224,5 +258,7 @@ export default {
 }
 </script>
 <style scoped>
-
+  .el-select .el-input {
+    width: 130px;
+  }
 </style>

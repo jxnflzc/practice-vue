@@ -12,6 +12,24 @@ export function login (data) {
   })
 }
 
+// 登出
+export function logout () {
+  return request({
+    url: '/user/logout', // 自己的接口地址
+    method: 'get', // 请求方法
+    data: {}// 需要携带的参数
+  })
+}
+
+// 用户信息
+export function info () {
+  return request({
+    url: '/user/info', // 自己的接口地址
+    method: 'get', // 请求方法
+    data: {}// 需要携带的参数
+  })
+}
+
 // 标签列表
 export function queryLabelList (data) {
   return request({
@@ -19,7 +37,9 @@ export function queryLabelList (data) {
     method: 'get', // 请求方法
     params: {
       page: data.page,
-      size: data.size
+      size: data.size,
+      keywords: data.keywords,
+      labelType: data.labelType
     }// 需要携带的参数
   })
 }
@@ -42,8 +62,9 @@ export function saveLabel (data) {
       labelId: data.labelId,
       labelName: data.labelName,
       labelType: {
-        code: data.labelType
+        code: data.labelTypeValue
       },
+      labelHot: data.labelHot,
       labelValue: data.labelValue
     }// 需要携带的参数
   })

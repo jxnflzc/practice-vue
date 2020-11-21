@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="loginForm" :model="user" label-width="80px" class="login-box">
+    <el-form ref="loginForm" :model="user" class="login-box">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="username">
         <el-input type="text" placeholder="请输入账号" v-model="user.username"/>
@@ -50,11 +50,12 @@ export default {
   },
   methods: {
     login (formName) {
-      login(this.$data.user)
+      login(this.user)
         .then(response => {
           let code = response.data.code
           if (code === '200') {
             sessionStorage['token'] = response.data.data
+            sessionStorage['userId'] = this.user.username
             Message.success('登录成功')
             this.$router.push({name: 'Home'})
           } else {

@@ -29,7 +29,7 @@ service.interceptors.response.use(
     if (response.data.code === '888') {
       setTimeout(function () {
         //  控制路由跳转或者直接改变href到登录页
-        window.location.href = '/login'
+        window.location.href = '/#/login'
       }, 1000)
       Message.error(response.data.message)
       return Promise.reject(response)
@@ -40,6 +40,7 @@ service.interceptors.response.use(
 
   error => {
     console.log('error:' + error) // for debug
+    Message.error(error)
     return Promise.reject(error)
   }
 )
