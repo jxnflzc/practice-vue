@@ -73,7 +73,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationModel.current"
@@ -89,7 +88,7 @@
           <el-input v-model="labelModel.labelName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="标签类型" :label-width="formLabelWidth">
-          <el-select v-model="labelModel.labelType" placeholder="标签类型">
+          <el-select v-model="labelModel.labelTypeValue" placeholder="标签类型">
             <el-option v-for="item in labelTypeList" :label="item.desc" :value="item.code"
                        :key="item.code"></el-option>
           </el-select>

@@ -8,6 +8,11 @@ module.exports = [{
       name: '标签查看',
       icon: 'el-icon-s-order',
       path: '/labelList'
+    },
+    {
+      name: '标签分布',
+      icon: 'el-icon-s-management',
+      path: '/labelType'
     }
   ]
 }]

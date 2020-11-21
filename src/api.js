@@ -91,3 +91,12 @@ export function deleteLabel (data) {
     }// 需要携带的参数
   })
 }
+
+// 查询标签分类数
+export function queryLabelTypeCount (data) {
+  return request({
+    url: '/label/queryLabelTypeCount', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {}// 需要携带的参数
+  })
+}
