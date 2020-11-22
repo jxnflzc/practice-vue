@@ -100,3 +100,26 @@ export function queryLabelTypeCount (data) {
     params: {}// 需要携带的参数
   })
 }
+
+// 查询日志列表
+export function queryLogList (data) {
+  return request({
+    url: '/log/queryLogList', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      page: data.page,
+      size: data.size,
+      keywords: data.keywords,
+      logType: data.logType
+    }// 需要携带的参数
+  })
+}
+
+// 查询日志列表
+export function queryLogTypeList (data) {
+  return request({
+    url: '/log/queryLogTypeList', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {}// 需要携带的参数
+  })
+}

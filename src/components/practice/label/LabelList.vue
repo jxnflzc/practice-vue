@@ -21,6 +21,11 @@
       :data="tableData"
       style="width: 100%; alignment: center">
       <el-table-column
+        type="index"
+        label="序号"
+        width="180">
+      </el-table-column>
+      <el-table-column
         prop="labelId"
         label="Id"
         width="180">

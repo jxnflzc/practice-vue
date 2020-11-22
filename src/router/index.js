@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/practice/Home'
 import LabelList from '@/components/practice/label/LabelList'
+import LogList from '@/components/practice/log/LogList'
 import LabelType from '@/components/practice/label/LabelType'
 import UserInfo from '@/components/practice/UserInfo'
 
@@ -54,6 +55,14 @@ export default new Router({
       path: '/labelType',
       name: 'LabelType',
       component: LabelType,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/logList',
+      name: 'LogList',
+      component: LogList,
       meta: {
         keepAlive: true
       }
