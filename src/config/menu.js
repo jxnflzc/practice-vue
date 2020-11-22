@@ -5,7 +5,7 @@ module.exports = [{
   icon: 'el-icon-price-tag',
   sub: [
     {
-      name: '标签查看',
+      name: '标签列表',
       icon: 'el-icon-s-order',
       path: '/labelList'
     },

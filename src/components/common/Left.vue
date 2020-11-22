@@ -7,7 +7,7 @@
       class="el-menu-vertical-demo">
       <el-dropdown class="align-center" >
         <span class="el-dropdown-link align-center">
-          <el-avatar>{{ userId }}</el-avatar>
+          <el-avatar>{{ userId.substr(0,1).toUpperCase() }}</el-avatar>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="info" :disabled="userLogin">个人信息</el-dropdown-item>

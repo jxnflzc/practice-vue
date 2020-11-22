@@ -1,10 +1,10 @@
 <template>
   <el-main>
     <el-button type="primary" round icon="el-icon-circle-plus-outline"
-               style="float: right" @click="dialogFormVisible = true; operate = '新建'">新建</el-button>
+               style="float: right" v-on:click="dialogFormVisible = true; operate = '新建'">新建</el-button>
     <el-input style="width: 300px; float: right; margin-right: 20px"
               placeholder="请输入Id或名称" v-model="queryLabelModel.keywords"
-              class="input-with-select" @keyup.enter.native="searchLabelList">
+              class="input-with-select" clearable @keyup.enter.native="searchLabelList">
       <el-button slot="append" v-on:click="searchLabelList" icon="el-icon-search"></el-button>
     </el-input>
     <el-select style="width: 200px; float: right; margin-right: 20px" v-on:change="searchLabelList"
@@ -81,38 +81,21 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationModel.total">
     </el-pagination>
-
-    <el-dialog :before-close="clearDialog" :title="operate+'标签'" :visible.sync="dialogFormVisible">
-      <el-form :model="this.labelModel">
-        <el-form-item label="标签名称" :label-width="formLabelWidth">
-          <el-input v-model="labelModel.labelName" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="标签类型" :label-width="formLabelWidth">
-          <el-select v-model="labelModel.labelTypeValue" placeholder="标签类型">
-            <el-option v-for="item in labelTypeList" :label="item.desc" :value="item.code"
-                       :key="item.code"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="标签值" :label-width="formLabelWidth">
-          <el-input v-model="labelModel.labelValue" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="标签热度" :label-width="formLabelWidth">
-          <el-rate v-model="labelModel.labelHot" style="line-height: 3rem;" :allow-half="true"></el-rate>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="saveLabel(labelModel)">保存</el-button>
-      </div>
-    </el-dialog>
+    <edit-label-dialog :dialogVisible="dialogFormVisible" :operate="operate" :labelTypeList="labelTypeList"
+                       @close="clearDialog" @save="saveDialog" :labelModel="labelModel"></edit-label-dialog>
   </el-main>
 </template>
 
 <script>
 import { queryLabelList, queryLabelTypeList, saveLabel, queryLabel, deleteLabel } from '@/api'
+import editLabelDialog from '@/components/practice/label/EditLabelDialog'
 import { Message } from 'element-ui'
 
 export default {
   name: 'LabelList',
+  components: {
+    editLabelDialog: editLabelDialog
+  },
   data () {
     return {
       rate: '3.3',
@@ -227,9 +210,14 @@ export default {
           }
         })
     },
-    clearDialog (done) {
+    clearDialog () {
       this.initLabelModel()
-      done()
+      this.dialogFormVisible = false
+    },
+    saveDialog () {
+      this.initLabelModel()
+      this.dialogFormVisible = false
+      this.queryLabelList()
     },
     initLabelModel () {
       this.labelModel = {
