@@ -22,7 +22,7 @@
       <el-table-column
         type="index"
         label="序号"
-        width="180">
+        width="80">
       </el-table-column>
 <!--      <el-table-column-->
 <!--        prop="logId"-->
@@ -78,7 +78,7 @@ export default {
       paginationModel: {
         sizes: [5, 10, 20, 50],
         size: 10,
-        total: 100,
+        total: 0,
         current: 1
       },
       tableData: [],

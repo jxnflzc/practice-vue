@@ -6,6 +6,7 @@ import router from './router'
 import Element from 'element-ui'
 import echarts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/iconfont.css'
 
 Vue.prototype.$echarts = echarts
 

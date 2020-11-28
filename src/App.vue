@@ -30,7 +30,7 @@ export default {
   color: #2c3e50;
 }
 .el-table td, .el-table th {
-  text-align: center;
+  text-align: left;
 }
 .el-pagination {
   margin-top: 10px;

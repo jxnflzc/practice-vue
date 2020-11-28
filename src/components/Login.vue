@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { login } from '@/api'
+import { login, auth } from '@/api'
 import { Message } from 'element-ui'
 
 export default {
@@ -56,6 +56,10 @@ export default {
           if (code === '200') {
             sessionStorage['token'] = response.data.data
             sessionStorage['userId'] = this.user.username
+            auth()
+              .then(response => {
+                sessionStorage['permission'] = response.data.data
+              })
             Message.success('登录成功')
             this.$router.push({name: 'Home'})
           } else {

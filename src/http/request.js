@@ -33,6 +33,13 @@ service.interceptors.response.use(
       }, 1000)
       Message.error(response.data.message)
       return Promise.reject(response)
+    } else if (response.data.code === '403') {
+      setTimeout(function () {
+        //  控制路由跳转或者直接改变href到登录页
+        window.location.href = '/#/home'
+      }, 1000)
+      Message.error(response.data.message)
+      return Promise.reject(response)
     } else {
       return response
     }

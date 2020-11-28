@@ -21,6 +21,15 @@ export function logout () {
   })
 }
 
+// 权限
+export function auth () {
+  return request({
+    url: '/user/auth', // 自己的接口地址
+    method: 'get', // 请求方法
+    data: {}// 需要携带的参数
+  })
+}
+
 // 用户信息
 export function info () {
   return request({

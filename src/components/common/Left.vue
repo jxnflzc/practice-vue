@@ -15,16 +15,16 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-menu-item index="/home">
-        <i class="el-icon-menu"></i>
+        <i class="iconfont icon-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-submenu v-for="item in menu" :index="item.id" :key="item.id">
+      <el-submenu v-for="item in menu" v-if="item.permission.includes(userPermission) " :index="item.id" :key="item.id">
         <template slot="title">
           <i :class="item.icon"></i>
           <span v-text="item.name"></span>
         </template>
-        <el-menu-item-group v-for="sub in item.sub" :key="sub.path">
-          <el-menu-item :class="sub.icon" :index="sub.path" v-text="sub.name"></el-menu-item>
+        <el-menu-item-group v-for="sub in item.sub" v-if="sub.permission.includes(userPermission) " :key="sub.path">
+          <el-menu-item :index="sub.path" v-text="sub.name"></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -42,6 +42,7 @@ export default {
     return {
       menu: menu,
       userId: sessionStorage['userId'] ? sessionStorage['userId'] : '',
+      userPermission: sessionStorage['permission'] ? sessionStorage['permission'] : 'V',
       userLogin: !sessionStorage['userId']
     }
   },
