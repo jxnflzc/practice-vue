@@ -19,8 +19,21 @@ module.exports = [
     ]
   },
   {
-    name: '日志',
+    name: '客群',
     id: '3',
+    icon: 'iconfont icon-group',
+    permission: ['O', 'A'],
+    sub: [
+      {
+        name: '客群列表',
+        path: '/groupList',
+        permission: ['O', 'A']
+      }
+    ]
+  },
+  {
+    name: '日志',
+    id: '4',
     icon: 'iconfont icon-log',
     permission: ['A'],
     sub: [

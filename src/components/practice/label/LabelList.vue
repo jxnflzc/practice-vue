@@ -73,7 +73,7 @@
         width="180">
         <template slot-scope="scope">
           <el-button type="text" size="small" v-on:click="queryLabel(scope.row.labelId)" icon="el-icon-edit"></el-button>
-          <el-button type="text" size="small" v-on:click="deleteLabel(scope.row.labelId)" icon="el-icon-delete"></el-button>
+          <el-button type="text" size="small" v-on:click="deleteLabelAlert(scope.row)" icon="el-icon-delete"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -201,6 +201,15 @@ export default {
             Message.error(response.data.message)
           }
         })
+    },
+    deleteLabelAlert (label) {
+      this.$confirm(`确定要删除标签 ${label.labelName} 吗`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteLabel(label.labelId)
+      })
     },
     deleteLabel (labelId) {
       deleteLabel(labelId)

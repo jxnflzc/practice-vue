@@ -6,6 +6,7 @@ import LabelList from '@/components/practice/label/LabelList'
 import LogList from '@/components/practice/log/LogList'
 import LabelType from '@/components/practice/label/LabelType'
 import UserInfo from '@/components/practice/UserInfo'
+import GroupList from '@/components/practice/group/GroupList'
 
 Vue.use(Router)
 
@@ -63,6 +64,14 @@ export default new Router({
       path: '/logList',
       name: 'LogList',
       component: LogList,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/groupList',
+      name: 'GroupList',
+      component: GroupList,
       meta: {
         keepAlive: true
       }

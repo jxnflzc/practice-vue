@@ -132,3 +132,15 @@ export function queryLogTypeList (data) {
     params: {}// 需要携带的参数
   })
 }
+
+// 查询客群列表
+export function queryUserGroupList (data) {
+  return request({
+    url: '/group/queryUserGroupList', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      page: data.page,
+      size: data.size
+    }// 需要携带的参数
+  })
+}
