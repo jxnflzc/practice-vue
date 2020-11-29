@@ -44,5 +44,18 @@ module.exports = [
         permission: ['A']
       }
     ]
+  },
+  {
+    name: '通知',
+    id: '5',
+    icon: 'iconfont icon-notice',
+    permission: ['O', 'A'],
+    sub: [
+      {
+        name: '通知列表',
+        path: '/noticeList',
+        permission: ['O', 'A']
+      }
+    ]
   }
 ]

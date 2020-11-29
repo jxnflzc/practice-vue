@@ -239,8 +239,8 @@ export default {
       this.labelModel = {
         labelId: '',
         labelName: '',
-        labelType: 'S',
-        labelTypeValue: 'S',
+        labelType: '',
+        labelTypeValue: '',
         labelValue: ''
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :before-close="clearDialog" :title="operate+'标签'" :visible.sync="dialogVisible">
+  <el-dialog :before-close="clearDialog" :title="operate+'客群'" :visible.sync="dialogVisible">
     <el-form :model="this.groupModel" :rules="rules" ref="groupModel">
       <el-form-item label="客群名称" :label-width="formLabelWidth" prop="groupName">
         <el-input v-model="groupModel.groupName" autocomplete="off"></el-input>

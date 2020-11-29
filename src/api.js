@@ -190,3 +190,37 @@ export function deleteGroup (data) {
     }// 需要携带的参数
   })
 }
+
+// 查询通知列表
+export function queryNoticeList (data) {
+  return request({
+    url: '/notice/queryNoticeList', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      page: data.page,
+      size: data.size,
+      keywords: data.keywords,
+      noticeLevel: data.noticeLevel
+    }// 需要携带的参数
+  })
+}
+
+// 查询通知列表
+export function queryNotice (data) {
+  return request({
+    url: '/notice/queryNotice', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      noticeId: data
+    }// 需要携带的参数
+  })
+}
+
+// 查询通知级别
+export function queryNoticeLevelList (data) {
+  return request({
+    url: '/notice/queryNoticeLevelList', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {}// 需要携带的参数
+  })
+}
