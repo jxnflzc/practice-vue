@@ -196,7 +196,7 @@ export default {
           if (code === '200') {
             this.dialogFormVisible = true
             this.labelModel = response.data.data
-            this.labelModel.labelTypeValue = response.data.data.labelType.code
+            this.$set(this.labelModel, 'labelTypeValue', response.data.data.labelType.code)
           } else {
             Message.error(response.data.message)
           }
@@ -241,7 +241,8 @@ export default {
         labelName: '',
         labelType: '',
         labelTypeValue: '',
-        labelValue: ''
+        labelValue: '',
+        labelHot: 0
       }
     },
     initQueryLabelModel () {

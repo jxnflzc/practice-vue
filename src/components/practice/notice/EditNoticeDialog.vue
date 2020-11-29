@@ -7,12 +7,14 @@
       <el-form-item label="通知正文" :label-width="formLabelWidth" prop="noticeContent">
         <el-input v-model="noticeModel.noticeContent" type="textarea" :rows="rows" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="通知级别" :label-width="formLabelWidth" prop="level">
-        <el-tag v-if="!edit" :type="noticeModel.noticeLevel.code" style="margin: 5px 5px">{{noticeModel.noticeLevel.desc}}</el-tag>
-        <el-select v-if="edit" v-model="noticeModel.noticeLevelValue" placeholder="请选择通知级别">
+      <el-form-item v-if="edit" label="通知级别" :label-width="formLabelWidth" prop="noticeLevelValue">
+        <el-select v-model="noticeModel.noticeLevelValue" placeholder="请选择通知级别">
           <el-option v-for="item in noticeLevelList" :label="item.desc" :value="item.code"
                      :key="item.code"></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item v-if="!edit" label="通知级别" :label-width="formLabelWidth">
+        <el-tag :type="noticeModel.noticeLevel.code" style="margin: 5px 5px">{{noticeModel.noticeLevel.desc}}</el-tag>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -22,7 +24,7 @@
 </template>
 
 <script>
-import { saveGroup } from '@/api'
+import { saveNotice } from '@/api'
 import { Message } from 'element-ui'
 
 export default {
@@ -72,7 +74,7 @@ export default {
       rules: {
         noticeTitle: [{ required: true, message: '请输入通知标题', trigger: 'blur' }],
         noticeContent: [{ required: true, message: '请输入通知正文', trigger: 'blur' }],
-        level: [{ required: true, message: '请选择通知级别', trigger: 'blur' }]
+        noticeLevelValue: [{ required: true, message: '请选择通知级别', trigger: 'blur' }]
       }
     }
   },
@@ -84,13 +86,13 @@ export default {
     saveNotice (noticeModel) {
       this.$refs.noticeModel.validate((valid) => {
         if (valid) {
-          saveGroup(noticeModel)
+          saveNotice(noticeModel)
             .then(response => {
               let code = response.data.code
               if (code === '200') {
                 this.$emit('save')
-                this.$refs.groupModel.resetFields()
-                Message.success(response.data.message)
+                this.$refs.noticeModel.resetFields()
+                Message.success(response.data.data)
               } else {
                 Message.error(response.data.message)
               }

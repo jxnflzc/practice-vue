@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { queryNoticeList, queryNotice, deleteGroup, queryNoticeLevelList } from '@/api'
+import { queryNoticeList, queryNotice, deleteNotice, queryNoticeLevelList } from '@/api'
 import editNoticeDialog from '@/components/practice/notice/EditNoticeDialog'
 import { Message } from 'element-ui'
 
@@ -175,7 +175,7 @@ export default {
           if (code === '200') {
             this.dialogFormVisible = true
             this.noticeModel = response.data.data
-            this.noticeModel.noticeLevelValue = response.data.data.noticeLevel.code
+            this.$set(this.noticeModel, 'noticeLevelValue', response.data.data.noticeLevel.code)
           } else {
             Message.error(response.data.message)
           }
@@ -187,13 +187,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // this.deleteGroup(notice.noticeTitle)
+        this.deleteNotice(notice.noticeId)
       }).catch(() => {
         // Do Nothing
       })
     },
-    deleteGroup (groupId) {
-      deleteGroup(groupId)
+    deleteNotice (groupId) {
+      deleteNotice(groupId)
         .then(response => {
           let code = response.data.code
           if (code === '200') {

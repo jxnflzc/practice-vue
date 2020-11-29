@@ -224,3 +224,30 @@ export function queryNoticeLevelList (data) {
     params: {}// 需要携带的参数
   })
 }
+
+// 添加/修改通知
+export function saveNotice (data) {
+  return request({
+    url: '/notice/saveNotice', // 自己的接口地址
+    method: 'post', // 请求方法
+    data: {
+      noticeId: data.noticeId,
+      noticeTitle: data.noticeTitle,
+      noticeLevel: {
+        code: data.noticeLevelValue
+      },
+      noticeContent: data.noticeContent
+    }// 需要携带的参数
+  })
+}
+
+// 删除通知
+export function deleteNotice (data) {
+  return request({
+    url: '/notice/deleteNotice', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      noticeId: data
+    }// 需要携带的参数
+  })
+}

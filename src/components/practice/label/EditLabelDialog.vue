@@ -4,7 +4,7 @@
       <el-form-item label="标签名称" :label-width="formLabelWidth" prop="labelName">
         <el-input v-model="labelModel.labelName" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="标签类型" :label-width="formLabelWidth" prop="labelType">
+      <el-form-item label="标签类型" :label-width="formLabelWidth" prop="labelTypeValue">
         <el-select v-model="labelModel.labelTypeValue" placeholder="标签类型">
           <el-option v-for="item in labelTypeList" :label="item.desc" :value="item.code"
                      :key="item.code"></el-option>
@@ -54,8 +54,8 @@ export default {
         return {
           labelId: '',
           labelName: '',
-          labelType: '',
-          labelTypeValue: '',
+          labelType: 'S',
+          labelTypeValue: 'S',
           labelValue: '',
           labelHot: 0
         }
@@ -66,7 +66,7 @@ export default {
     return {
       rules: {
         labelName: [{ required: true, message: '请输入标签名称', trigger: 'blur' }],
-        labelType: [{ required: true, message: '请选择标签类型', trigger: 'blur' }],
+        labelTypeValue: [{ required: true, message: '请选择标签类型', trigger: 'blur' }],
         labelValue: [{ required: true, message: '请输入标签值', trigger: 'blur' }]
       }
     }
@@ -85,7 +85,7 @@ export default {
               if (code === '200') {
                 this.$refs.labelModel.resetFields()
                 this.$emit('save')
-                Message.success(response.data.message)
+                Message.success(response.data.data)
               } else {
                 Message.error(response.data.message)
               }
