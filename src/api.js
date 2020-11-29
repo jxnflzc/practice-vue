@@ -53,6 +53,15 @@ export function queryLabelList (data) {
   })
 }
 
+// 标签列表
+export function queryAllLabels (data) {
+  return request({
+    url: '/label/queryAllLabels', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {}// 需要携带的参数
+  })
+}
+
 // 查询基础标签分类
 export function queryLabelTypeList () {
   return request({
@@ -134,13 +143,50 @@ export function queryLogTypeList (data) {
 }
 
 // 查询客群列表
-export function queryUserGroupList (data) {
+export function queryGroupList (data) {
   return request({
-    url: '/group/queryUserGroupList', // 自己的接口地址
+    url: '/group/queryGroupList', // 自己的接口地址
     method: 'get', // 请求方法
     params: {
       page: data.page,
-      size: data.size
+      size: data.size,
+      keywords: data.keywords
+    }// 需要携带的参数
+  })
+}
+
+// 查询客群列表
+export function queryGroup (data) {
+  return request({
+    url: '/group/queryGroup', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      groupId: data
+    }// 需要携带的参数
+  })
+}
+
+// 保存客群
+export function saveGroup (data) {
+  return request({
+    url: '/group/saveGroup', // 自己的接口地址
+    method: 'post', // 请求方法
+    data: {
+      groupId: data.groupId,
+      groupName: data.groupName,
+      groupDesc: data.groupDesc,
+      tags: JSON.stringify(data.tags)
+    }// 需要携带的参数
+  })
+}
+
+// 删除客群
+export function deleteGroup (data) {
+  return request({
+    url: '/group/deleteGroup', // 自己的接口地址
+    method: 'get', // 请求方法
+    params: {
+      groupId: data
     }// 需要携带的参数
   })
 }

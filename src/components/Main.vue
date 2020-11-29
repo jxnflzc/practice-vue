@@ -1,12 +1,21 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <el-container>
+    <el-aside width="12%" >
+      <left></left>
+    </el-aside>
+    <el-main>
+      <router-view></router-view>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+import left from '@/components/common/Left'
 export default {
-  name: 'App'
+  name: 'Main',
+  components: {
+    left: left
+  }
 }
 </script>
 

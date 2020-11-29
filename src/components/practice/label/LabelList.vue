@@ -121,8 +121,8 @@ export default {
       labelModel: {
         labelId: '',
         labelName: '',
-        labelType: 'S',
-        labelTypeValue: 'S',
+        labelType: '',
+        labelTypeValue: '',
         labelValue: '',
         labelHot: 0
       },
@@ -209,6 +209,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deleteLabel(label.labelId)
+      }).catch(() => {
+        // Do Nothing
       })
     },
     deleteLabel (labelId) {

@@ -8,6 +8,7 @@ module.exports = [
     sub: [
       {
         name: '标签列表',
+        id: '/labelList',
         path: '/labelList',
         permission: ['O', 'A']
       },

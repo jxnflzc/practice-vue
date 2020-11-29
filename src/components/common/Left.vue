@@ -1,10 +1,10 @@
 <template>
   <div>
-    <img src="@/assets/logo.png" />
     <el-menu
       default-active="/home"
       router
       class="el-menu-vertical-demo">
+      <img src="@/assets/logo.png" />
       <el-dropdown class="align-center" >
         <span class="el-dropdown-link align-center">
           <el-avatar>{{ userId.substr(0,1).toUpperCase() }}</el-avatar>
@@ -18,13 +18,13 @@
         <i class="iconfont icon-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-submenu v-for="item in menu" v-if="item.permission.includes(userPermission) " :index="item.id" :key="item.id">
+      <el-submenu v-for="item in menu" v-if="canShow(item)" :index="item.id" :key="item.id">
         <template slot="title">
           <i :class="item.icon"></i>
           <span v-text="item.name"></span>
         </template>
-        <el-menu-item-group v-for="sub in item.sub" v-if="sub.permission.includes(userPermission) " :key="sub.path">
-          <el-menu-item :index="sub.path" v-text="sub.name"></el-menu-item>
+        <el-menu-item-group>
+          <el-menu-item v-for="sub in item.sub" v-if="canShow(sub)" :key="sub.path" :index="sub.path" v-text="sub.name"></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -54,6 +54,7 @@ export default {
           if (code === '200') {
             sessionStorage.removeItem('token')
             sessionStorage.removeItem('userId')
+            sessionStorage.removeItem('permission')
             Message.success('登出成功')
             this.$router.push({name: 'Login'})
           } else {
@@ -63,6 +64,9 @@ export default {
     },
     info () {
       this.$router.push({name: 'UserInfo'})
+    },
+    canShow (data) {
+      return data.permission.includes(this.userPermission)
     }
   },
   mounted () {

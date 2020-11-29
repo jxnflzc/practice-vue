@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
+import Main from '@/components/Main'
 import Home from '@/components/practice/Home'
 import LabelList from '@/components/practice/label/LabelList'
 import LogList from '@/components/practice/log/LogList'
@@ -13,68 +14,51 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Login',
-      component: Login,
-      meta: {
-        keepAlive: false
-      }
-    },
-    {
       path: '/login',
       name: 'Login',
-      component: Login,
-      meta: {
-        keepAlive: false
-      }
+      component: Login
     },
     {
-      path: '/home',
-      name: 'Home',
-      component: Home,
-      meta: {
-        keepAlive: true
-      }
+      path: '/',
+      name: 'Login',
+      component: Login
     },
     {
-      path: '/labelList',
-      name: 'LabelList',
-      component: LabelList,
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/userInfo',
-      name: 'UserInfo',
-      component: UserInfo,
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/labelType',
-      name: 'LabelType',
-      component: LabelType,
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/logList',
-      name: 'LogList',
-      component: LogList,
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/groupList',
-      name: 'GroupList',
-      component: GroupList,
-      meta: {
-        keepAlive: true
-      }
+      path: '/',
+      name: 'Main',
+      component: Main,
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: Home
+        },
+        {
+          path: 'labelList',
+          name: 'LabelList',
+          component: LabelList
+        },
+        {
+          path: 'userInfo',
+          name: 'UserInfo',
+          component: UserInfo
+        },
+        {
+          path: 'labelType',
+          name: 'LabelType',
+          component: LabelType
+        },
+        {
+          path: 'logList',
+          name: 'LogList',
+          component: LogList
+        },
+        {
+          path: 'groupList',
+          name: 'GroupList',
+          component: GroupList
+        }
+      ]
     }
   ]
 })

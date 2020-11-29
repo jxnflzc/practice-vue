@@ -6,7 +6,8 @@ const store = new Vuex.Store({
 
   state: {
     // 存储token
-    Authorization: sessionStorage['token'] ? sessionStorage['token'] : ''
+    Authorization: sessionStorage['token'] ? sessionStorage['token'] : '',
+    LeftIndex: '/home'
   },
 
   mutations: {

@@ -59,9 +59,9 @@ export default {
             auth()
               .then(response => {
                 sessionStorage['permission'] = response.data.data
+                Message.success('登录成功')
+                this.$router.push({name: 'Home'})
               })
-            Message.success('登录成功')
-            this.$router.push({name: 'Home'})
           } else {
             Message.error('登录失败')
           }
