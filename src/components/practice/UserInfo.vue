@@ -19,16 +19,16 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" v-on:click="updateUserInfo(user)">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { info } from '@/api'
-import {Message} from 'element-ui'
-// import { Message } from 'element-ui'
+import { info, updateUserInfo } from '@/api'
+import { Message } from 'element-ui'
+
 export default {
   name: 'UserInfo',
   data () {
@@ -60,6 +60,17 @@ export default {
             this.user = response.data.data
           } else {
             Message.error('查询失败')
+          }
+        })
+    },
+    updateUserInfo (user) {
+      updateUserInfo(user)
+        .then(response => {
+          let code = response.data.code
+          if (code === '200') {
+            Message.success(response.data.data)
+          } else {
+            Message.error(response.data.message)
           }
         })
     }

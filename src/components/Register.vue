@@ -1,33 +1,48 @@
 <template>
   <div>
     <el-form ref="user" :model="user" :rules="rules" class="login-box">
-      <h3 class="login-title">欢迎登录</h3>
+      <h3 class="login-title">注册账号</h3>
       <el-form-item label="账号" prop="username">
         <el-input type="text" placeholder="请输入账号" v-model="user.username"/>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" placeholder="请输入密码" v-model="user.password"/>
       </el-form-item>
+      <el-form-item label="重复密码" prop="againPassword">
+        <el-input type="password" placeholder="请再次输入密码" v-model="user.againPassword"/>
+      </el-form-item>
       <el-form-item >
-        <el-button style="float: left"  type="primary" v-on:click="login(user)">登录</el-button>
-        <router-link style="float: right" :to="{path:'/register'}">注册账号</router-link>
+        <el-button style="float: left"  type="primary" v-on:click="register(user)">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { login, auth } from '@/api'
+import { register } from '@/api'
 import { validUserId, validUserPassword } from '@/method/valid'
 import { Message } from 'element-ui'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
+    const validAgainPassword = async (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请输入密码'))
+      }
+      if (!/^[a-zA-Z0-9]{4,16}$/.test(value)) {
+        callback(new Error('密码必须为4-16位字母或数字'))
+      } else if (value !== this.user.password) {
+        callback(new Error('两次输入密码必须相同'))
+      } else {
+        callback()
+      }
+    }
     return {
       user: {
         username: '',
-        password: ''
+        password: '',
+        againPassword: ''
       },
       rules: {
         username: [
@@ -35,29 +50,26 @@ export default {
         ],
         password: [
           {required: true, validator: validUserPassword, trigger: 'blur'}
+        ],
+        againPassword: [
+          {required: true, validator: validAgainPassword, trigger: 'blur'}
         ]
       },
       dialogVisible: false
     }
   },
   methods: {
-    login (user) {
+    register (user) {
       this.$refs.user.validate((valid) => {
         if (valid) {
-          login(user)
+          register(user)
             .then(response => {
               let code = response.data.code
               if (code === '200') {
-                sessionStorage['token'] = response.data.data
-                sessionStorage['userId'] = this.user.username
-                auth()
-                  .then(response => {
-                    sessionStorage['permission'] = response.data.data
-                    Message.success('登录成功')
-                    this.$router.push({name: 'Home'})
-                  })
+                Message.success('注册成功')
+                this.$router.push({name: 'Login'})
               } else {
-                Message.error('登录失败')
+                Message.error(response.data.message)
               }
             })
         }

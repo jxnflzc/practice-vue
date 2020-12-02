@@ -12,6 +12,31 @@ export function login (data) {
   })
 }
 
+// 注册
+export function register (data) {
+  return request({
+    url: '/user/register', // 自己的接口地址
+    method: 'post', // 请求方法
+    data: {
+      userId: data.username,
+      userPassword: data.password
+    }// 需要携带的参数
+  })
+}
+
+// 修改个人信息
+export function updateUserInfo (data) {
+  return request({
+    url: '/user/updateUserInfo', // 自己的接口地址
+    method: 'post', // 请求方法
+    data: {
+      userId: data.userId,
+      userName: data.userName,
+      userGender: data.userGender
+    }// 需要携带的参数
+  })
+}
+
 // 登出
 export function logout () {
   return request({
