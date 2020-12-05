@@ -7,18 +7,15 @@
       <el-form-item label="通知正文" :label-width="formLabelWidth" prop="noticeContent">
         <el-input v-model="noticeModel.noticeContent" type="textarea" :rows="rows" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item v-if="edit" label="通知级别" :label-width="formLabelWidth" prop="noticeLevelValue">
+      <el-form-item label="通知级别" :label-width="formLabelWidth" prop="noticeLevelValue">
         <el-select v-model="noticeModel.noticeLevelValue" placeholder="请选择通知级别">
           <el-option v-for="item in noticeLevelList" :label="item.desc" :value="item.code"
                      :key="item.code"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!edit" label="通知级别" :label-width="formLabelWidth">
-        <el-tag :type="noticeModel.noticeLevel.code" style="margin: 5px 5px">{{noticeModel.noticeLevel.desc}}</el-tag>
-      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button v-if="edit" type="primary" v-on:click="saveNotice(noticeModel)">保存</el-button>
+      <el-button type="primary" v-on:click="saveNotice(noticeModel)">保存</el-button>
     </div>
   </el-dialog>
 </template>
@@ -39,10 +36,6 @@ export default {
       default: '120px'
     },
     dialogVisible: {
-      type: Boolean,
-      default: false
-    },
-    edit: {
       type: Boolean,
       default: false
     },

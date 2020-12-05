@@ -1,7 +1,7 @@
 <template>
   <el-main>
     <el-button type="primary" round icon="el-icon-circle-plus-outline"
-               style="float: right" v-on:click="dialogFormVisible = true; operate = '新建'; edit = true">新建</el-button>
+               style="float: right" v-on:click="editDialogVisible = true; operate = '新建'">新建</el-button>
     <el-input style="width: 300px; float: right; margin-right: 20px"
               placeholder="请输入Id或名称" v-model="queryModel.keywords"
               class="input-with-select" clearable @keyup.enter.native="searchNoticeList">
@@ -43,12 +43,17 @@
       </el-table-column>
       <el-table-column
         prop="createdBy"
-        label="创建人"
+        label="发布人"
         width="180">
       </el-table-column>
       <el-table-column
         prop="createdTime"
-        label="创建时间"
+        label="发布时间"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="updatedTime"
+        label="更新时间"
         width="180">
       </el-table-column>
       <el-table-column
@@ -72,20 +77,25 @@
       :total="paginationModel.total">
     </el-pagination>
 
-    <edit-notice-dialog :dialogVisible="dialogFormVisible" :operate="operate" :noticeModel="noticeModel" :edit="edit"
+    <edit-notice-dialog :dialogVisible="editDialogVisible" :operate="operate" :noticeModel="noticeModel"
                        @close="clearDialog" @save="saveDialog" :noticeLevelList="noticeLevelList"></edit-notice-dialog>
+
+    <show-notice-dialog :dialogVisible="showDialogVisible" :operate="operate" :noticeModel="noticeModel"
+                       @close="clearDialog" @save="saveDialog" :noticeLevelList="noticeLevelList"></show-notice-dialog>
   </el-main>
 </template>
 
 <script>
 import { queryNoticeList, queryNotice, deleteNotice, queryNoticeLevelList } from '@/api'
 import editNoticeDialog from '@/components/practice/notice/EditNoticeDialog'
+import showNoticeDialog from '@/components/practice/notice/ShowNoticeDialog'
 import { Message } from 'element-ui'
 
 export default {
   name: 'NoticeList',
   components: {
-    editNoticeDialog: editNoticeDialog
+    editNoticeDialog: editNoticeDialog,
+    showNoticeDialog: showNoticeDialog
   },
   data () {
     return {
@@ -101,9 +111,9 @@ export default {
         total: 0,
         current: 1
       },
-      edit: false,
       tableData: [],
-      dialogFormVisible: false,
+      editDialogVisible: false,
+      showDialogVisible: false,
       noticeModel: {
         noticeId: '',
         noticeTitle: '',
@@ -150,11 +160,12 @@ export default {
     },
     clearDialog () {
       this.initNoticeModel()
-      this.dialogFormVisible = false
+      this.editDialogVisible = false
+      this.showDialogVisible = false
     },
     saveDialog () {
       this.initNoticeModel()
-      this.dialogFormVisible = false
+      this.editDialogVisible = false
       this.queryNoticeList()
     },
     initNoticeModel () {
@@ -168,12 +179,15 @@ export default {
     },
     queryNotice (noticeId, op, edit) {
       this.operate = op
-      this.edit = edit
       queryNotice(noticeId)
         .then(response => {
           let code = response.data.code
           if (code === '200') {
-            this.dialogFormVisible = true
+            if (edit) {
+              this.editDialogVisible = true
+            } else {
+              this.showDialogVisible = true
+            }
             this.noticeModel = response.data.data
             this.$set(this.noticeModel, 'noticeLevelValue', response.data.data.noticeLevel.code)
           } else {
